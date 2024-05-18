@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
-import logo from "./assets/logo.svg";
-import ring from "./assets/ring.svg";
-import moon from "./assets/icons/moon.svg";
-import ShoppingCart from "./assets/shopping-cart.svg";
+import logo from "../assets/logo.svg";
+import ring from "../assets/ring.svg";
+import moon from "../assets/icons/moon.svg";
+import ShoppingCart from "../assets/shopping-cart.svg";
 
 const Header = () => {
   return (
