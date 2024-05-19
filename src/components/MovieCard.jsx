@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getImgUrl } from "../utilities/mov-img";
 import Ratings from "./Ratings";
 import ModalMovDet from "./ModalMovDet";
+import { MovieContext } from "../context/context";
 
 const MovieCard = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
-
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const { cardData, setCardData } = useContext(MovieContext);
 
   function handleModadlClose() {
     setSelectedItem(null);
@@ -19,10 +21,22 @@ const MovieCard = ({ movie }) => {
     setShowModal(true);
   }
 
+  function handleAddToCart(e, movie) {
+    e.stopPropagation();
+    const found = cardData.find((item) => {
+      return item.id === movie.id;
+    });
+    if (!found) {
+      setCardData([...cardData, movie]);
+    } else {
+      console.error("Already Added...!");
+    }
+  }
   return (
     <>
       {showModal && (
         <ModalMovDet
+          onCardAdd={handleAddToCart}
           movie={selectedItem}
           onClose={handleModadlClose}
         ></ModalMovDet>
@@ -44,13 +58,14 @@ const MovieCard = ({ movie }) => {
             <div className="flex items-center space-x-1 mb-5">
               <Ratings value={movie.rating}></Ratings>
             </div>
-            <div
+            <a
+              onClick={(e) => handleAddToCart(e, movie)}
               className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
               href="#"
             >
               <img src="./assets/tag.svg" alt="" />
               <span>${movie.price} | Add to Cart</span>
-            </div>
+            </a>
           </figcaption>
         </a>
       </figure>

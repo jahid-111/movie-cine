@@ -1,15 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import logo from "../assets/logo.svg";
 import ring from "../assets/ring.svg";
 import moon from "../assets/icons/moon.svg";
 import ShoppingCart from "../assets/shopping-cart.svg";
+import CartDetails from "./CartDetails";
+import { MovieContext } from "../context/context";
 
 const Header = () => {
+  const [showCart, setShowCart] = useState(false);
+  const { cardData, setCardData } = useContext(MovieContext);
+
+  function handleCartShow() {
+    setShowCart(true);
+  }
+
   return (
     <div>
       <header>
+        {showCart && (
+          <CartDetails onClose={() => setShowCart(false)}></CartDetails>
+        )}
+
         <nav className="container flex items-center justify-between space-x-10 py-6">
           <a href="index.html">
             <img src={logo} width="139" height="26" alt="Logo" />
@@ -34,6 +47,7 @@ const Header = () => {
             </li>
             <li>
               <a
+                onClick={handleCartShow}
                 className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
                 href="#"
               >
@@ -43,6 +57,7 @@ const Header = () => {
                   height="24"
                   alt="Shopping-Cart"
                 />
+                {cardData.length > 0 && <span>{cardData.length}</span>}
               </a>
             </li>
           </ul>
