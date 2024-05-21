@@ -4,6 +4,8 @@ import { getImgUrl } from "../utilities/mov-img";
 import Ratings from "./Ratings";
 import ModalMovDet from "./ModalMovDet";
 import { MovieContext } from "../context/context";
+import { toast } from "react-toastify";
+import "react-toastify";
 
 const MovieCard = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,6 +24,7 @@ const MovieCard = ({ movie }) => {
   }
 
   function handleAddToCart(e, movie) {
+    e.preventDefault();
     e.stopPropagation();
     const found = cardData.find((item) => {
       return item.id === movie.id;
@@ -31,6 +34,7 @@ const MovieCard = ({ movie }) => {
     } else {
       console.error("Already Added...!");
     }
+    toast.success(`Movie ${movie.title} added SuccessFully`, {});
   }
   return (
     <>
